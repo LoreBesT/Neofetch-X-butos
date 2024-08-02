@@ -3,10 +3,28 @@
 #include <stddef.h>
 #include <stdlib.h>
 //Le librerie non sono tutte necessarie. Sono state importate solo le 4 supportate
-#include <syscalls.h> //commentare su macchina virtuale con kernel linux
+// #include <syscalls.h> //commentare su macchina virtuale con kernel linux
 
 #define RED "\e[0;31m"
 #define RESET "\e[0m"
+#define GRN "\e[0;32m"
+
+
+void draw_b_logo() {
+    const char* logo[] = {
+        "█████   ██  ██  ████   ████████   █████",
+        "██  ██  ██  ██   ██   ██      ██  ██",
+        "█████   ██  ██   ██   ██      ██  █████",
+        "██  ██  ██  ██   ██   ██      ██     ██",
+        "█████   ██████   ██    ████████   █████"
+    };
+    printf("\n");
+    for (int i = 0; i < 5; ++i) {
+        printf(GRN"%s\n"RESET, logo[i]);
+    }
+}
+
+
 
 // Funzione per ottenere le informazioni sulla CPU tramite CPUID
 void get_processor_version(char *vendor, char *brand) {
@@ -89,13 +107,23 @@ int main() {
     char brand[49]; // 3 * 16 + 1 per il terminatore
 
     get_processor_version(vendor, brand);
-
+    draw_b_logo();
+    printf(RED"\nNome del PC\n"RESET); //Serve funzione specifica dell'os
+    printf("--------------\n");
     printf(RED"OS: "RESET);
     printf("%s ", os_name);
     printf("%.1f\n",os_version);
+    printf(RED"Kernel "RESET); // Serve funzione specifica dell'os
+    printf("Kernel name\n");
+    printf(RED"Uptime: "RESET);
+    printf("Uptime\n"); //Serve funzione specifica dell'os indicante data ed ora
     printf(RED"CPU: "RESET);
     printf("%s ", brand);
     printf("%s\n", vendor);
+    printf(RED"GPU: "RESET);
+    printf("gpu\n");
+    printf(RED"Memory: "RESET);
+    printf("memoria\n");
 
     return 0;
 }
